@@ -22,7 +22,7 @@ spec:
           podSpec:
             containers:
               - name: pca
-                image: nginx:latest
+                image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
                 resources:
                   requests:
                     cpu: 10m
@@ -42,7 +42,7 @@ spec:
           podSpec:
             containers:
               - name: pcb
-                image: nginx:latest
+                image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
                 resources:
                   requests:
                     cpu: 10m
@@ -53,7 +53,7 @@ spec:
           podSpec:
             containers:
               - name: pcc
-                image: nginx:latest
+                image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
                 resources:
                   requests:
                     cpu: 10m
@@ -64,7 +64,7 @@ spec:
           podSpec:
             containers:
               - name: pcd
-                image: nginx:latest
+                image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
                 resources:
                   requests:
                     cpu: 10m

@@ -1,0 +1,234 @@
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T17:58:10+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:58:21+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:58:31+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:58:42+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:58:52+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:59:03+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:59:13+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:59:24+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:59:34+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-596b7776c4-fg5qt has status: ContainerCreating","time":"2025-12-10T17:59:45+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:00:06+08:00"}
+{"level":"warning","msg":"dev:app Pod grove-operator-devspace-bd8456f46-jc9q9: 0/4 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 3 node(s) had untolerated taint {fake-node: true}. preemption: 0/4 nodes are available: 1 No preemption victims found for incoming pod, 3 Preemption is not helpful for scheduling. (FailedScheduling)","time":"2025-12-10T18:00:17+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-bd8456f46-jc9q9 has status: ContainerCreating","time":"2025-12-10T18:00:17+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-bd8456f46-jc9q9 has status: ContainerCreating","time":"2025-12-10T18:00:27+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:00:35+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-746d64648b-64sbl has status: ContainerCreating","time":"2025-12-10T18:00:45+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-746d64648b-64sbl has status: ContainerCreating","time":"2025-12-10T18:00:56+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-746d64648b-64sbl has status: ContainerCreating","time":"2025-12-10T18:01:06+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-746d64648b-64sbl has status: ContainerCreating","time":"2025-12-10T18:01:17+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-64sbl","time":"2025-12-10T18:01:21+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:01:21+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:01:35+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:01:35+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:01:41+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-10T18:01:42+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11815 \u003c- 10567","time":"2025-12-10T18:01:42+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T18:01:42+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-746d64648b-64sbl (pod:container)","time":"2025-12-10T18:01:43+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:03:39+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-64sbl","time":"2025-12-10T18:03:40+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:03:40+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:05:16+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-64sbl","time":"2025-12-10T18:05:16+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:05:17+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:05:47+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:05:47+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:05:47+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:05:57+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-64sbl","time":"2025-12-10T18:05:58+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:05:58+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:06:28+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:06:28+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:06:28+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:07:06+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-8nwv5","time":"2025-12-10T18:07:07+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:07:08+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:07:38+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:07:38+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:07:38+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:11:18+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-746d64648b-8nwv5","time":"2025-12-10T18:11:19+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:11:19+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:11:23+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:11:23+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:11:29+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-10T18:11:30+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11995 \u003c- 10567","time":"2025-12-10T18:11:30+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T18:11:31+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-746d64648b-8nwv5 (pod:container)","time":"2025-12-10T18:11:31+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:17:52+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:03+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:13+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:24+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:34+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:45+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:18:55+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:06+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:16+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:27+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:37+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:48+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:19:58+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:20:09+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:20:19+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:20:30+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:20:40+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:20:51+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:21:01+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: ContainerCreating","time":"2025-12-10T18:21:12+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-76d5f6f979-2kpvq","time":"2025-12-10T18:21:14+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:21:15+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:21:46+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:21:46+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:23:01+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-10T18:23:03+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11703 \u003c- 10567","time":"2025-12-10T18:23:04+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T18:23:04+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-76d5f6f979-2kpvq (pod:container)","time":"2025-12-10T18:23:05+08:00"}
+{"level":"info","msg":"dev:app term  Restarting because: command terminated with exit code 137","time":"2025-12-10T18:24:04+08:00"}
+{"level":"error","msg":"dev:app sync  Restarting because: Upstream Sync - connection lost to pod default/grove-operator-devspace-76d5f6f979-2kpvq:  command terminated with exit code 137","time":"2025-12-10T18:24:04+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because: Start ssh server on :8022\n command terminated with exit code 137","time":"2025-12-10T18:24:06+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-76d5f6f979-2kpvq (pod:container)","time":"2025-12-10T18:24:07+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"494fad1e8c957064a3a4c8a60bc51508abc4b2366ad2fd4afe6b35d5b6560377\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:08+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"57e3ed9ef354b90c5822ca5093d677612595ca66e66a16e240beb3b7d4037c79\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:10+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"96137c9967efb60a33c583e746085994194cbb747a3a3b4bac4080b2a676c64e\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:12+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"a2f2a1210de0f62caa8019d773061cb7b9b01fbc02a40d3b27de1bb7c6d34872\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:14+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"52888a9a3858dc17dc251e897a0ae45a7fce7d3eeca0fbd32d0cc69f34aa7a76\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:16+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"6a5be6a97b0bec745e4e4ed20bbcf47e92464a1972b72f0bc463f921bef05b42\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:18+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"89085e2788fef730316db16e3e77f877cdeca1bf3d35bd46d4c11157c9f3b587\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:20+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"0e276de4d1538941e3172e6194099a127d1df347fe9556bb6f795cde4f6cd6de\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:22+08:00"}
+{"level":"error","msg":"dev:app proxy Restarting because: ping connection: rpc error: code = DeadlineExceeded desc = context deadline exceeded","time":"2025-12-10T18:24:24+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"a90e715771b168daa24d50260ae5c03c09377142fddfb7ae1096fdeaad1d29fd\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:24+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"f315bcdc49e0b406f6c30330aa4571bb8a3fe4b456dc4c6ebfdc08e071217818\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:26+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"382d8b418582c16803460fd7dbc373b5833c0c8d119b610a6ab0335da0a13167\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:28+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"0d4980fbbeac0ff0e3d0f6bacc16bd5e65f598719845b9d2f239dc489ed95dd2\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:30+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"b69ff92e0ca50650c73ce2baa15d4cd3ff07d6cd94d0c934714945ff54461db3\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:32+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"fe71efafa3d18f0821e8043298db5ac93d7166f40a86f8869494a2a736cb7ca6\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:34+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"ea17395af97bac3429001d385b5847067a027b031daa4f91a5c04321aea687be\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:36+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"572302cb76eb1419ec8cfd49fe480638cbb268c6abc402fec66fa325670d003d\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:38+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"3408c3ad34e195a13688f6ecb80758827ae791287dd36c6f4bb053611ce21a48\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:41+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11703 \u003c- 10567","time":"2025-12-10T18:24:42+08:00"}
+{"level":"warning","msg":"dev:app ssh   restarting ssh process because:  Internal error occurred: error executing command in container: failed to exec in container: failed to start exec \"e0e97b90459612f22ade69744ea9392640a8eca542c716375a9f61a800f65358\": OCI runtime exec failed: exec failed: unable to start container process: exec: \"/tmp/devspacehelper\": stat /tmp/devspacehelper: no such file or directory","time":"2025-12-10T18:24:43+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:25:24+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-76d5f6f979-2kpvq","time":"2025-12-10T18:25:25+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:25:25+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:25:25+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:25:25+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:25:32+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-10T18:25:32+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11262 \u003c- 10567","time":"2025-12-10T18:25:32+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T18:25:33+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-76d5f6f979-2kpvq (pod:container)","time":"2025-12-10T18:25:33+08:00"}
+{"level":"info","msg":"dev:app term  Restarting because: command terminated with exit code 137","time":"2025-12-10T18:25:55+08:00"}
+{"level":"error","msg":"dev:app proxy Restarting because: connection lost to pod default/grove-operator-devspace-76d5f6f979-2kpvq:  command terminated with exit code 137","time":"2025-12-10T18:25:55+08:00"}
+{"level":"error","msg":"dev:app sync  Restarting because: Downstream Sync - connection lost to pod default/grove-operator-devspace-76d5f6f979-2kpvq: Use inotify as watching method in container\n command terminated with exit code 137","time":"2025-12-10T18:25:55+08:00"}
+{"level":"warning","msg":"dev:app proxy Pod grove-operator-devspace-76d5f6f979-2kpvq: Back-off restarting failed container grove-operator in pod grove-operator-devspace-76d5f6f979-2kpvq_default(7a8c2cc3-7b27-43bf-bece-c583cfbb55ff) (BackOff)","time":"2025-12-10T18:26:06+08:00"}
+{"level":"warning","msg":"dev:app proxy DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: OOMKilled","time":"2025-12-10T18:26:06+08:00"}
+{"level":"warning","msg":"dev:app term  Pod grove-operator-devspace-76d5f6f979-2kpvq: Back-off restarting failed container grove-operator in pod grove-operator-devspace-76d5f6f979-2kpvq_default(7a8c2cc3-7b27-43bf-bece-c583cfbb55ff) (BackOff)","time":"2025-12-10T18:26:10+08:00"}
+{"level":"warning","msg":"dev:app term  DevSpace is waiting, because Pod grove-operator-devspace-76d5f6f979-2kpvq has status: OOMKilled","time":"2025-12-10T18:26:10+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-76d5f6f979-2kpvq (pod:container)","time":"2025-12-10T18:26:12+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:26:14+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T18:26:21+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-69d6d9b447-2cm5v","time":"2025-12-10T18:26:22+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T18:26:23+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T18:26:25+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T18:26:25+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T18:26:31+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-10T18:26:32+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11215 \u003c- 10567","time":"2025-12-10T18:26:32+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T18:26:32+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-69d6d9b447-2cm5v (pod:container)","time":"2025-12-10T18:26:33+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T23:43:22+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:43:32+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:43:43+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:43:53+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:44:04+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:44:14+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:44:25+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-5fb5445b86-brx9n has status: ContainerCreating","time":"2025-12-10T23:44:35+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-5fb5445b86-brx9n","time":"2025-12-10T23:44:43+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T23:44:44+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T23:46:15+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T23:46:15+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T23:46:22+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10310 -\u003e 8022","time":"2025-12-10T23:46:23+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11751 \u003c- 10567","time":"2025-12-10T23:46:23+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T23:46:23+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-5fb5445b86-brx9n (pod:container)","time":"2025-12-10T23:46:24+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-10T23:59:07+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-5fb5445b86-brx9n","time":"2025-12-10T23:59:07+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-10T23:59:08+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-10T23:59:08+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-10T23:59:08+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-10T23:59:12+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10310 -\u003e 8022","time":"2025-12-10T23:59:13+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 10030 \u003c- 10567","time":"2025-12-10T23:59:13+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-10T23:59:13+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-5fb5445b86-brx9n (pod:container)","time":"2025-12-10T23:59:14+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-11T00:00:14+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-5fb5445b86-brx9n","time":"2025-12-11T00:00:15+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-11T00:00:15+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-11T00:00:15+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-11T00:00:15+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-11T00:00:17+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10310 -\u003e 8022","time":"2025-12-11T00:00:18+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 10946 \u003c- 10567","time":"2025-12-11T00:00:18+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-11T00:00:18+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-5fb5445b86-brx9n (pod:container)","time":"2025-12-11T00:00:19+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-11T09:44:56+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:07+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:17+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:28+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:38+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:49+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:45:59+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:46:10+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:46:20+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:46:31+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:46:41+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:46:52+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:47:02+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:47:13+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:47:23+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:47:34+08:00"}
+{"level":"warning","msg":"dev:app DevSpace is waiting, because Pod grove-operator-devspace-56ff54549b-gcxbg has status: ContainerCreating","time":"2025-12-11T09:47:44+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-56ff54549b-gcxbg","time":"2025-12-11T09:47:48+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-11T09:47:48+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-11T09:48:19+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-11T09:48:19+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-11T09:48:32+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-11T09:48:33+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 10471 \u003c- 10567","time":"2025-12-11T09:48:33+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-11T09:48:33+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-56ff54549b-gcxbg (pod:container)","time":"2025-12-11T09:48:34+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-11T09:53:08+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-56ff54549b-gcxbg","time":"2025-12-11T09:53:09+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-11T09:53:10+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-11T09:53:10+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-11T09:53:10+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-11T09:53:13+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-11T09:53:13+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 10738 \u003c- 10567","time":"2025-12-11T09:53:13+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-11T09:53:14+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-56ff54549b-gcxbg (pod:container)","time":"2025-12-11T09:53:14+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-11T10:13:57+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-56ff54549b-gcxbg","time":"2025-12-11T10:13:57+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-11T10:13:58+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-11T10:13:58+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-11T10:13:58+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-11T10:13:58+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-11T10:13:59+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11366 \u003c- 10567","time":"2025-12-11T10:13:59+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-11T10:14:00+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-56ff54549b-gcxbg (pod:container)","time":"2025-12-11T10:14:00+08:00"}
+{"level":"info","msg":"dev:app Waiting for pod to become ready...","time":"2025-12-11T10:25:25+08:00"}
+{"level":"info","msg":"dev:app Selected pod grove-operator-devspace-56ff54549b-gcxbg","time":"2025-12-11T10:25:25+08:00"}
+{"level":"info","msg":"dev:app ports Port forwarding started on: 2345 -\u003e 2345, 8080 -\u003e 8080, 8008 -\u003e 8008, 9090 -\u003e 9090","time":"2025-12-11T10:25:26+08:00"}
+{"level":"info","msg":"dev:app sync  Sync started on: ./ \u003c-\u003e /data","time":"2025-12-11T10:25:26+08:00"}
+{"level":"info","msg":"dev:app sync  Waiting for initial sync to complete","time":"2025-12-11T10:25:26+08:00"}
+{"level":"info","msg":"dev:app sync  Initial sync completed","time":"2025-12-11T10:25:27+08:00"}
+{"level":"info","msg":"dev:app ssh   Port forwarding started on: 10478 -\u003e 8022","time":"2025-12-11T10:25:27+08:00"}
+{"level":"info","msg":"dev:app proxy Port forwarding started on: 11070 \u003c- 10567","time":"2025-12-11T10:25:27+08:00"}
+{"level":"info","msg":"dev:app ssh   Use 'ssh my-app.devspace' to connect via SSH","time":"2025-12-11T10:25:28+08:00"}
+{"level":"info","msg":"dev:app term  Opening shell to grove-operator:grove-operator-devspace-56ff54549b-gcxbg (pod:container)","time":"2025-12-11T10:25:28+08:00"}

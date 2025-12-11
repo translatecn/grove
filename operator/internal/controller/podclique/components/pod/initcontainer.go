@@ -25,8 +25,8 @@ import (
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/constants"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
-	"github.com/ai-dynamo/grove/operator/internal/version"
+	"github.com/ai-dynamo/grove/operator/internal/over-version"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 
 	"github.com/samber/lo"
 	corev1 "k8s.io/api/core/v1"
@@ -107,7 +107,7 @@ func addInitContainer(pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alph
 
 	pod.Spec.InitContainers = append(pod.Spec.InitContainers, corev1.Container{
 		Name:  initContainerName,
-		Image: fmt.Sprintf("%s:%s", image, version.Get().GitVersion),
+		Image: fmt.Sprintf("%s:%s", image, over_version.Get().GitVersion),
 		Args:  args,
 		VolumeMounts: []corev1.VolumeMount{
 			{

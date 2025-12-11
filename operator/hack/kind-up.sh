@@ -148,7 +148,7 @@ function kind::create_cluster() {
     export KUBECONFIG="${KIND_CONFIG_DIR}/kubeconfig"
     echo "Setting KUBECONFIG to ${KUBECONFIG}"
   fi
-  
+  kind delete cluster --name "${CLUSTER_NAME}"
   kind create cluster --name "${CLUSTER_NAME}" --config "${KIND_CONFIG_DIR}/cluster-config.yaml"
   
   if [ "${DEPLOY_REGISTRY}" = true ]; then
@@ -262,14 +262,14 @@ function kind::deploy_kwok() {
   local kwok_repo="kubernetes-sigs/kwok"
   local kwok_latest_release=$(curl -s "https://api.github.com/repos/${kwok_repo}/releases/latest" | jq -r '.tag_name')
   echo "Deploying KWOK ${kwok_latest_release}..."
-  
+
   # deploy KWOK CRDs and controller
   echo "  Installing KWOK CRDs and controller..."
-  kubectl apply -f "https://github.com/${kwok_repo}/releases/download/${kwok_latest_release}/kwok.yaml" > /dev/null
+  kubectl apply -f "https://gh-proxy.com/https://github.com/${kwok_repo}/releases/download/${kwok_latest_release}/kwok.yaml" > /dev/null
   
   # setup default custom resources of stages
   echo "  Setting up KWOK stage configurations..."
-  kubectl apply -f "https://github.com/${kwok_repo}/releases/download/${kwok_latest_release}/stage-fast.yaml" > /dev/null
+  kubectl apply -f "https://gh-proxy.com/https://github.com/${kwok_repo}/releases/download/${kwok_latest_release}/stage-fast.yaml" > /dev/null
   
   # Wait for KWOK controller to be ready
   echo "  Waiting for KWOK controller to be ready..."

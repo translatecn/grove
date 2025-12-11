@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grove-operator
+  namespace: default
+  labels:
+    app.kubernetes.io/part-of: grove
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/part-of: grove
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/part-of: grove
+    spec:
+      volumes:
+        - name: kube-api-access-grove
+          projected:
+            sources:
+              - serviceAccountToken:
+                  expirationSeconds: 43200
+                  path: token
+              - configMap:
+                  name: kube-root-ca.crt
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef:
+                        apiVersion: v1
+                        fieldPath: metadata.namespace
+            defaultMode: 420
+        - name: operator-config
+          configMap:
+            name: grove-operator-cm-5813397a
+            defaultMode: 420
+        - name: grove-webhook-server-cert
+          secret:
+            secretName: grove-webhook-server-cert
+            defaultMode: 420
+      containers:
+        - name: grove-operator
+          image: localhost:5001/grove-operator:v0.1.0-dev@sha256:fd00fdfa4ed759dd8906a382b393676214ce93d23518484c65e4faf1055d9cf5
+          args:
+            - '--config=/etc/grove-operator/config/config.yaml'
+          env:
+            - name: GROVE_OPERATOR_SERVICE_ACCOUNT_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.serviceAccountName
+            - name: GROVE_INIT_CONTAINER_IMAGE
+              value: localhost:5001/grove-initc
+          resources:
+            limits:
+#              cpu: 4
+#              memory: 4Gi
+            requests:
+#              cpu: 4
+#              memory: 4Gi
+          volumeMounts:
+            - name: kube-api-access-grove
+              readOnly: true
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            - name: operator-config
+              mountPath: /etc/grove-operator/config
+            - name: grove-webhook-server-cert
+              readOnly: true
+              mountPath: /etc/grove-operator/webhook-certs
+      serviceAccountName: grove-operator
+      serviceAccount: grove-operator

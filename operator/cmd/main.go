@@ -26,9 +26,9 @@ import (
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	groveopts "github.com/ai-dynamo/grove/operator/cmd/opts"
 	grovectrl "github.com/ai-dynamo/grove/operator/internal/controller"
-	"github.com/ai-dynamo/grove/operator/internal/controller/cert"
-	grovelogger "github.com/ai-dynamo/grove/operator/internal/logger"
-	groveversion "github.com/ai-dynamo/grove/operator/internal/version"
+	"github.com/ai-dynamo/grove/operator/internal/controller/over_cert"
+	groveversion "github.com/ai-dynamo/grove/operator/internal/over-version"
+	grovelogger "github.com/ai-dynamo/grove/operator/internal/over_logger"
 
 	"github.com/spf13/pflag"
 	"k8s.io/apimachinery/pkg/types"
@@ -74,7 +74,7 @@ func main() {
 	}
 
 	webhookCertsReadyCh := make(chan struct{})
-	if err = cert.ManageWebhookCerts(mgr, operatorCfg.Server.Webhooks.ServerCertDir, operatorCfg.Authorizer.Enabled, webhookCertsReadyCh); err != nil {
+	if err = over_cert.ManageWebhookCerts(mgr, operatorCfg.Server.Webhooks.ServerCertDir, operatorCfg.Authorizer.Enabled, webhookCertsReadyCh); err != nil {
 		logger.Error(err, "failed to setup cert rotation")
 		os.Exit(1)
 	}

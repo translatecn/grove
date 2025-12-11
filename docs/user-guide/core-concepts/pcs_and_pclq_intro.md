@@ -29,7 +29,7 @@ spec:
             effect: NoSchedule
           containers:
           - name: model-worker
-            image: nginx:latest
+            image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
             command: ["/bin/sh"]
             args: ["-c", "echo 'Model Worker (Aggregated) on node:' && hostname && sleep 3600"]
             resources:
@@ -133,7 +133,7 @@ spec:
             effect: NoSchedule
           containers:
           - name: prefill
-            image: nginx:latest
+            image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
             command: ["/bin/sh"]
             args: ["-c", "echo 'Prefill Worker on node:' && hostname && sleep 3600"]
             resources:
@@ -152,7 +152,7 @@ spec:
             effect: NoSchedule
           containers:
           - name: decode
-            image: nginx:latest
+            image: ccr.ccs.tencentyun.com/acejilam/ib-an9ydoeqsx:ee434023cf89d7dfb21f63d64f0f9d74-latest
             command: ["/bin/sh"]
             args: ["-c", "echo 'Decode Worker on node:' && hostname && sleep 3600"]
             resources:

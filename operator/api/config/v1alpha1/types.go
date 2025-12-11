@@ -146,6 +146,28 @@ type Server struct {
 	Port int `json:"port"`
 }
 
+// AuthorizerConfig defines the configuration for the authorizer admission webhook.
+type AuthorizerConfig struct {
+	// Enabled indicates whether the authorizer is enabled.
+	Enabled bool `json:"enabled"`
+	// ExemptServiceAccountUserNames is a list of service account usernames that are exempt from authorizer checks.
+	// Each service account username name in ExemptServiceAccountUserNames should be of the following format:
+	// system:serviceaccount:<namespace>:<service-account-name>. ServiceAccounts are represented in this
+	// format when checking the username in authenticationv1.UserInfo.Name.
+	// +optional
+	ExemptServiceAccountUserNames []string `json:"exemptServiceAccountUserNames,omitempty"`
+}
+
+// ClusterTopologyConfiguration defines the configuration for topology-aware scheduling.
+type ClusterTopologyConfiguration struct {
+	// Enabled indicates whether topology-aware scheduling is enabled.
+	Enabled bool `json:"enabled"`
+	// Name is the ClusterTopology resource name to use.
+	// Defaults to "grove-topology" if not specified when topology is enabled.
+	// +optional
+	Name string `json:"name,omitempty"`
+}
+
 // ControllerConfiguration defines the configuration for the controllers.
 type ControllerConfiguration struct {
 	// PodCliqueSet is the configuration for the PodCliqueSet controller.
@@ -175,26 +197,4 @@ type PodCliqueScalingGroupControllerConfiguration struct {
 	// ConcurrentSyncs is the number of workers used for the controller to concurrently work on events.
 	// +optional
 	ConcurrentSyncs *int `json:"concurrentSyncs,omitempty"`
-}
-
-// AuthorizerConfig defines the configuration for the authorizer admission webhook.
-type AuthorizerConfig struct {
-	// Enabled indicates whether the authorizer is enabled.
-	Enabled bool `json:"enabled"`
-	// ExemptServiceAccountUserNames is a list of service account usernames that are exempt from authorizer checks.
-	// Each service account username name in ExemptServiceAccountUserNames should be of the following format:
-	// system:serviceaccount:<namespace>:<service-account-name>. ServiceAccounts are represented in this
-	// format when checking the username in authenticationv1.UserInfo.Name.
-	// +optional
-	ExemptServiceAccountUserNames []string `json:"exemptServiceAccountUserNames,omitempty"`
-}
-
-// ClusterTopologyConfiguration defines the configuration for topology-aware scheduling.
-type ClusterTopologyConfiguration struct {
-	// Enabled indicates whether topology-aware scheduling is enabled.
-	Enabled bool `json:"enabled"`
-	// Name is the ClusterTopology resource name to use.
-	// Defaults to "grove-topology" if not specified when topology is enabled.
-	// +optional
-	Name string `json:"name,omitempty"`
 }

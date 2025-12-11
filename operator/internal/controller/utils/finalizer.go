@@ -34,19 +34,6 @@ func AddAndPatchFinalizer(ctx context.Context, writer client.Writer, obj client.
 	)
 }
 
-// RemoveAndPatchFinalizer uses merge-patch strategy to patch the given object thereby resulting in removal of the given finalizer.
-func RemoveAndPatchFinalizer(ctx context.Context, writer client.Writer, obj client.Object, finalizer string) error {
-	return client.IgnoreNotFound(
-		patchFinalizer(ctx,
-			writer,
-			obj,
-			mergeFromWithOptimisticLock,
-			controllerutil.RemoveFinalizer,
-			finalizer,
-		),
-	)
-}
-
 // mergeFromWithOptimisticLock returns a client.Patch with the given client.Object as the base object and the optimistic lock option.
 func mergeFromWithOptimisticLock(obj client.Object, opts ...client.MergeFromOption) client.Patch {
 	return client.MergeFromWithOptions(obj, append(opts, client.MergeFromWithOptimisticLock{})...)
@@ -64,4 +51,17 @@ func patchFinalizer(ctx context.Context, writer client.Writer, obj client.Object
 	beforePatch := obj.DeepCopyObject().(client.Object)
 	mutateFunc(obj, finalizer)
 	return writer.Patch(ctx, obj, patchFunc(beforePatch))
+}
+
+// RemoveAndPatchFinalizer uses merge-patch strategy to patch the given object thereby resulting in removal of the given finalizer.
+func RemoveAndPatchFinalizer(ctx context.Context, writer client.Writer, obj client.Object, finalizer string) error {
+	return client.IgnoreNotFound(
+		patchFinalizer(ctx,
+			writer,
+			obj,
+			mergeFromWithOptimisticLock,
+			controllerutil.RemoveFinalizer,
+			finalizer,
+		),
+	)
 }

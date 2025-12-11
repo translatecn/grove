@@ -22,10 +22,10 @@ import (
 
 	"github.com/ai-dynamo/grove/operator/api/common"
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/samber/lo"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 // GetExpectedPCSGFQNsForPCS computes the FQNs for all PodCliqueScalingGroups defined in PCS for the given replica.
@@ -61,27 +61,6 @@ func isStandalonePCLQ(pcs *grovecorev1alpha1.PodCliqueSet, pclqName string) bool
 	}, false)
 }
 
-// GetPodCliqueSet gets the owner PodCliqueSet object.
-func GetPodCliqueSet(ctx context.Context, cl client.Client, objectMeta metav1.ObjectMeta) (*grovecorev1alpha1.PodCliqueSet, error) {
-	pcsName := GetPodCliqueSetName(objectMeta)
-	pcs := &grovecorev1alpha1.PodCliqueSet{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      pcsName,
-			Namespace: objectMeta.Namespace,
-		},
-	}
-	err := cl.Get(ctx, client.ObjectKeyFromObject(pcs), pcs)
-	return pcs, err
-}
-
-// GetPodCliqueSetName retrieves the PodCliqueSet name from the labels of the given ObjectMeta.
-// NOTE: It is assumed that all managed objects like PCSG, PCLQ and Pods will always have PCS name as value for grovecorev1alpha1.LabelPartOfKey label.
-// It should be ensured that labels that are set by the operator are never removed.
-func GetPodCliqueSetName(objectMeta metav1.ObjectMeta) string {
-	pcsName := objectMeta.GetLabels()[common.LabelPartOfKey]
-	return pcsName
-}
-
 // GetExpectedPCLQNamesGroupByOwner returns the expected unqualified PodClique names which are either owned by PodCliqueSet or PodCliqueScalingGroup.
 func GetExpectedPCLQNamesGroupByOwner(pcs *grovecorev1alpha1.PodCliqueSet) (expectedPCLQNamesForPCS []string, expectedPCLQNamesForPCSG []string) {
 	pcsgConfigs := pcs.Spec.Template.PodCliqueScalingGroupConfigs
@@ -114,4 +93,25 @@ func GetExpectedStandAlonePCLQFQNsPerPCSReplica(pcs *grovecorev1alpha1.PodClique
 		pclqFQNsByPCSReplica[pcsReplicaIndex] = GetPodCliqueFQNsForPCSReplicaNotInPCSG(pcs, pcsReplicaIndex)
 	}
 	return pclqFQNsByPCSReplica
+}
+
+// GetPodCliqueSetName retrieves the PodCliqueSet name from the labels of the given ObjectMeta.
+// NOTE: It is assumed that all managed objects like PCSG, PCLQ and Pods will always have PCS name as value for grovecorev1alpha1.LabelPartOfKey label.
+// It should be ensured that labels that are set by the operator are never removed.
+func GetPodCliqueSetName(objectMeta metav1.ObjectMeta) string {
+	pcsName := objectMeta.GetLabels()[common.LabelPartOfKey]
+	return pcsName
+}
+
+// GetPodCliqueSet gets the owner PodCliqueSet object.
+func GetPodCliqueSet(ctx context.Context, cl client.Client, objectMeta metav1.ObjectMeta) (*grovecorev1alpha1.PodCliqueSet, error) {
+	pcsName := GetPodCliqueSetName(objectMeta)
+	pcs := &grovecorev1alpha1.PodCliqueSet{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      pcsName,
+			Namespace: objectMeta.Namespace,
+		},
+	}
+	err := cl.Get(ctx, client.ObjectKeyFromObject(pcs), pcs)
+	return pcs, err
 }

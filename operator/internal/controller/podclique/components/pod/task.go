@@ -23,7 +23,7 @@ import (
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/constants"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	"github.com/ai-dynamo/grove/operator/internal/utils"
 
 	"github.com/go-logr/logr"
@@ -32,6 +32,15 @@ import (
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+// createPodDeletionTasks creates multiple deletion tasks for a batch of pods
+func (r _resource) createPodDeletionTasks(logger logr.Logger, pclq *grovecorev1alpha1.PodClique, podsToDelete []*corev1.Pod, pclqExpectationsKey string) []utils.Task {
+	deletionTasks := make([]utils.Task, 0, len(podsToDelete))
+	for _, podToDelete := range podsToDelete {
+		deletionTasks = append(deletionTasks, r.createPodDeletionTask(logger, pclq, podToDelete, pclqExpectationsKey))
+	}
+	return deletionTasks
+}
 
 // createPodCreationTask creates a utils.Task which will create a Pod, capture the create-expectation and also emit a success/failed event post creation.
 func (r _resource) createPodCreationTask(logger logr.Logger, pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alpha1.PodClique, podGangName, pclqExpectationsKey string, taskIndex, podHostNameIndex int) utils.Task {
@@ -96,13 +105,4 @@ func (r _resource) createPodDeletionTask(logger logr.Logger, pclq *grovecorev1al
 			return nil
 		},
 	}
-}
-
-// createPodDeletionTasks creates multiple deletion tasks for a batch of pods
-func (r _resource) createPodDeletionTasks(logger logr.Logger, pclq *grovecorev1alpha1.PodClique, podsToDelete []*corev1.Pod, pclqExpectationsKey string) []utils.Task {
-	deletionTasks := make([]utils.Task, 0, len(podsToDelete))
-	for _, podToDelete := range podsToDelete {
-		deletionTasks = append(deletionTasks, r.createPodDeletionTask(logger, pclq, podToDelete, pclqExpectationsKey))
-	}
-	return deletionTasks
 }

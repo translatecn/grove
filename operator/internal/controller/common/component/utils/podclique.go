@@ -141,19 +141,6 @@ func groupPCLQsByLabel(pclqs []grovecorev1alpha1.PodClique, labelKey string) map
 	return grouped
 }
 
-// ComputePCLQPodTemplateHash computes the pod template hash for the PCLQ pod spec.
-func ComputePCLQPodTemplateHash(pclqTemplateSpec *grovecorev1alpha1.PodCliqueTemplateSpec, priorityClassName string) string {
-	podTemplateSpec := corev1.PodTemplateSpec{
-		ObjectMeta: metav1.ObjectMeta{
-			Labels:      pclqTemplateSpec.Labels,
-			Annotations: pclqTemplateSpec.Annotations,
-		},
-		Spec: pclqTemplateSpec.Spec.PodSpec,
-	}
-	podTemplateSpec.Spec.PriorityClassName = priorityClassName
-	return k8sutils.ComputeHash(&podTemplateSpec)
-}
-
 // IsPCLQUpdateInProgress checks if PodClique is under rolling update.
 func IsPCLQUpdateInProgress(pclq *grovecorev1alpha1.PodClique) bool {
 	return pclq.Status.RollingUpdateProgress != nil && pclq.Status.RollingUpdateProgress.UpdateEndedAt == nil
@@ -177,4 +164,17 @@ func GetExpectedPCLQPodTemplateHash(pcs *grovecorev1alpha1.PodCliqueSet, pclqObj
 		return "", fmt.Errorf("pod clique template not found for cliqueName: %s", cliqueName)
 	}
 	return ComputePCLQPodTemplateHash(matchingPCLQTemplateSpec, pcs.Spec.Template.PriorityClassName), nil
+}
+
+// ComputePCLQPodTemplateHash computes the pod template hash for the PCLQ pod spec.
+func ComputePCLQPodTemplateHash(pclqTemplateSpec *grovecorev1alpha1.PodCliqueTemplateSpec, priorityClassName string) string {
+	podTemplateSpec := corev1.PodTemplateSpec{
+		ObjectMeta: metav1.ObjectMeta{
+			Labels:      pclqTemplateSpec.Labels,
+			Annotations: pclqTemplateSpec.Annotations,
+		},
+		Spec: pclqTemplateSpec.Spec.PodSpec,
+	}
+	podTemplateSpec.Spec.PriorityClassName = priorityClassName
+	return k8sutils.ComputeHash(&podTemplateSpec)
 }

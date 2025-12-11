@@ -56,17 +56,6 @@ func (r *Reconciler) reconcileSpec(ctx context.Context, logger logr.Logger, pcs 
 	return ctrlcommon.ContinueReconcile()
 }
 
-// ensureFinalizer adds the PodCliqueSet finalizer if not already present.
-func (r *Reconciler) ensureFinalizer(ctx context.Context, logger logr.Logger, pcs *grovecorev1alpha1.PodCliqueSet) ctrlcommon.ReconcileStepResult {
-	if !controllerutil.ContainsFinalizer(pcs, apiconstants.FinalizerPodCliqueSet) {
-		logger.Info("Adding finalizer", "finalizerName", apiconstants.FinalizerPodCliqueSet)
-		if err := ctrlutils.AddAndPatchFinalizer(ctx, r.client, pcs, apiconstants.FinalizerPodCliqueSet); err != nil {
-			return ctrlcommon.ReconcileWithErrors("error adding finalizer", fmt.Errorf("failed to add finalizer: %s to PodCliqueSet: %v: %w", apiconstants.FinalizerPodCliqueSet, client.ObjectKeyFromObject(pcs), err))
-		}
-	}
-	return ctrlcommon.ContinueReconcile()
-}
-
 // processGenerationHashChange computes the generation hash given a PodCliqueSet resource and if the generation has
 // changed from the previously persisted pcs.status.generationHash then it resets the pcs.status.rollingUpdateProgress
 func (r *Reconciler) processGenerationHashChange(ctx context.Context, logger logr.Logger, pcs *grovecorev1alpha1.PodCliqueSet) ctrlcommon.ReconcileStepResult {
@@ -76,9 +65,9 @@ func (r *Reconciler) processGenerationHashChange(ctx context.Context, logger log
 	// if the generationHash is not reflected correctly yet, requeue. Allow the informer cache to catch-up.
 	if !r.isGenerationHashExpectationSatisfied(pcsObjectName, pcs.Status.CurrentGenerationHash) {
 		return ctrlcommon.ReconcileAfter(constants.ComponentSyncRetryInterval, fmt.Sprintf("CurrentGenerationHash is not up-to-date for PodCliqueSet: %v", pcsObjectKey))
-	} else {
-		r.pcsGenerationHashExpectations.Delete(pcsObjectName)
 	}
+
+	r.pcsGenerationHashExpectations.Delete(pcsObjectName)
 
 	newGenerationHash := computeGenerationHash(pcs)
 	if pcs.Status.CurrentGenerationHash == nil {
@@ -201,15 +190,26 @@ func (r *Reconciler) recordIncompleteReconcile(ctx context.Context, logger logr.
 // getOrderedKindsForSync returns the ordered list of component kinds to synchronize.
 func getOrderedKindsForSync() []component.Kind {
 	return []component.Kind{
-		component.KindServiceAccount,
-		component.KindRole,
-		component.KindRoleBinding,
-		component.KindServiceAccountTokenSecret,
-		component.KindHeadlessService,
-		component.KindHorizontalPodAutoscaler,
-		component.KindPodCliqueSetReplica,
-		component.KindPodClique,
+		component.KindServiceAccount,            // ✅
+		component.KindRole,                      // ✅
+		component.KindRoleBinding,               // ✅
+		component.KindServiceAccountTokenSecret, // ✅
+		component.KindHeadlessService,           // ✅
+		component.KindHorizontalPodAutoscaler,   // ✅
+		component.KindPodCliqueSetReplica,       // ✅
+		component.KindPodClique,                 // ✅
 		component.KindPodCliqueScalingGroup,
 		component.KindPodGang,
 	}
+}
+
+// ensureFinalizer adds the PodCliqueSet finalizer if not already present.
+func (r *Reconciler) ensureFinalizer(ctx context.Context, logger logr.Logger, pcs *grovecorev1alpha1.PodCliqueSet) ctrlcommon.ReconcileStepResult {
+	if !controllerutil.ContainsFinalizer(pcs, apiconstants.FinalizerPodCliqueSet) {
+		logger.Info("Adding finalizer", "finalizerName", apiconstants.FinalizerPodCliqueSet)
+		if err := ctrlutils.AddAndPatchFinalizer(ctx, r.client, pcs, apiconstants.FinalizerPodCliqueSet); err != nil {
+			return ctrlcommon.ReconcileWithErrors("error adding finalizer", fmt.Errorf("failed to add finalizer: %s to PodCliqueSet: %v: %w", apiconstants.FinalizerPodCliqueSet, client.ObjectKeyFromObject(pcs), err))
+		}
+	}
+	return ctrlcommon.ContinueReconcile()
 }

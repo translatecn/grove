@@ -44,19 +44,6 @@ type Reconciler struct {
 	pcsGenerationHashExpectations sync.Map
 }
 
-// NewReconciler creates a new reconciler for PodCliqueSet.
-func NewReconciler(mgr ctrl.Manager, controllerCfg configv1alpha1.PodCliqueSetControllerConfiguration) *Reconciler {
-	eventRecorder := mgr.GetEventRecorderFor(controllerName)
-	client := mgr.GetClient()
-	return &Reconciler{
-		config:                        controllerCfg,
-		client:                        client,
-		reconcileStatusRecorder:       ctrlcommon.NewReconcileErrorRecorder(client),
-		operatorRegistry:              pcscomponent.CreateOperatorRegistry(mgr, eventRecorder),
-		pcsGenerationHashExpectations: sync.Map{},
-	}
-}
-
 // Reconcile reconciles a PodCliqueSet resource.
 func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := ctrllogger.FromContext(ctx).WithName(controllerName)
@@ -88,4 +75,17 @@ func (r *Reconciler) reconcileDelete(ctx context.Context, logger logr.Logger, pc
 		return r.triggerDeletionFlow(ctx, dLog, pcs)
 	}
 	return ctrlcommon.ContinueReconcile()
+}
+
+// NewReconciler creates a new reconciler for PodCliqueSet.
+func NewReconciler(mgr ctrl.Manager, controllerCfg configv1alpha1.PodCliqueSetControllerConfiguration) *Reconciler {
+	eventRecorder := mgr.GetEventRecorderFor(controllerName)
+	client := mgr.GetClient()
+	return &Reconciler{
+		config:                        controllerCfg,
+		client:                        client,
+		reconcileStatusRecorder:       ctrlcommon.NewReconcileErrorRecorder(client),
+		operatorRegistry:              pcscomponent.CreateOperatorRegistry(mgr, eventRecorder),
+		pcsGenerationHashExpectations: sync.Map{},
+	}
 }

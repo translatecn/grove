@@ -20,14 +20,14 @@ import (
 	"github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
 	"github.com/ai-dynamo/grove/operator/internal/controller/podclique/components/pod"
-	"github.com/ai-dynamo/grove/operator/internal/expect"
+	"github.com/ai-dynamo/grove/operator/internal/over-expect"
 
 	"k8s.io/client-go/tools/record"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 )
 
 // CreateOperatorRegistry initializes the operator registry for the PodClique reconciler.
-func CreateOperatorRegistry(mgr manager.Manager, eventRecorder record.EventRecorder, expectationsStore *expect.ExpectationsStore) component.OperatorRegistry[v1alpha1.PodClique] {
+func CreateOperatorRegistry(mgr manager.Manager, eventRecorder record.EventRecorder, expectationsStore *over_expect.ExpectationsStore) component.OperatorRegistry[v1alpha1.PodClique] {
 	reg := component.NewOperatorRegistry[v1alpha1.PodClique]()
 	reg.Register(component.KindPod, pod.New(mgr.GetClient(), mgr.GetScheme(), eventRecorder, expectationsStore))
 	return reg

@@ -24,9 +24,8 @@ import (
 	"github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	grovectrl "github.com/ai-dynamo/grove/operator/internal/controller/common"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	k8sutils "github.com/ai-dynamo/grove/operator/internal/utils/kubernetes"
-
 	"github.com/go-logr/logr"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -45,18 +44,6 @@ func GetPodCliqueSet(ctx context.Context, cl client.Client, logger logr.Logger, 
 	return grovectrl.ContinueReconcile()
 }
 
-// GetPodClique gets the latest PodClique object. It will usually hit the informer cache. If the object is not found, it will log a message and return DoNotRequeue.
-func GetPodClique(ctx context.Context, cl client.Client, logger logr.Logger, objectKey client.ObjectKey, pclq *v1alpha1.PodClique, ignoreNotFound bool) grovectrl.ReconcileStepResult {
-	if err := cl.Get(ctx, objectKey, pclq); err != nil {
-		if ignoreNotFound && apierrors.IsNotFound(err) {
-			logger.Info("PodClique not found", "objectKey", objectKey)
-			return grovectrl.DoNotRequeue()
-		}
-		return grovectrl.ReconcileWithErrors("error getting PodClique", err)
-	}
-	return grovectrl.ContinueReconcile()
-}
-
 // GetPodCliqueScalingGroup gets the latest PodCliqueScalingGroup object. It will usually hit the informer cache. If the object is not found, it will log a message and return DoNotRequeue.
 func GetPodCliqueScalingGroup(ctx context.Context, cl client.Client, logger logr.Logger, objectKey client.ObjectKey, pcsg *v1alpha1.PodCliqueScalingGroup) grovectrl.ReconcileStepResult {
 	if err := cl.Get(ctx, objectKey, pcsg); err != nil {
@@ -66,6 +53,38 @@ func GetPodCliqueScalingGroup(ctx context.Context, cl client.Client, logger logr
 		}
 		logger.Error(err, "error getting PodCliqueScalingGroup")
 		return grovectrl.ReconcileWithErrors("error getting PodCliqueScalingGroup", err)
+	}
+	return grovectrl.ContinueReconcile()
+}
+
+// ShouldRequeueAfter checks if an error is a GroveError and if yes then returns true
+// when the error code is groveerr.ErrCodeRequeueAfter along with the GroveError.Message, else it returns false and an empty message.
+func ShouldRequeueAfter(err error) bool {
+	groveErr := &groveerr.GroveError{}
+	if errors.As(err, &groveErr) {
+		return groveErr.Code == groveerr.ErrCodeRequeueAfter
+	}
+	return false
+}
+
+// ShouldContinueReconcileAndRequeue checks if an error is a Grove error,
+// and if it is, returns true when the error code is groveerr.ErrCodeContinueReconcileAndRequeue.
+func ShouldContinueReconcileAndRequeue(err error) bool {
+	groveErr := &groveerr.GroveError{}
+	if errors.As(err, &groveErr) {
+		return groveErr.Code == groveerr.ErrCodeContinueReconcileAndRequeue
+	}
+	return false
+}
+
+// GetPodClique gets the latest PodClique object. It will usually hit the informer cache. If the object is not found, it will log a message and return DoNotRequeue.
+func GetPodClique(ctx context.Context, cl client.Client, logger logr.Logger, objectKey client.ObjectKey, pclq *v1alpha1.PodClique, ignoreNotFound bool) grovectrl.ReconcileStepResult {
+	if err := cl.Get(ctx, objectKey, pclq); err != nil {
+		if ignoreNotFound && apierrors.IsNotFound(err) {
+			logger.Info("PodClique not found", "objectKey", objectKey)
+			return grovectrl.DoNotRequeue()
+		}
+		return grovectrl.ReconcileWithErrors("error getting PodClique", err)
 	}
 	return grovectrl.ContinueReconcile()
 }
@@ -89,24 +108,4 @@ func VerifyNoResourceAwaitsCleanup[T component.GroveCustomResourceType](ctx cont
 	}
 	logger.Info("No resources are awaiting cleanup")
 	return grovectrl.ContinueReconcile()
-}
-
-// ShouldRequeueAfter checks if an error is a GroveError and if yes then returns true
-// when the error code is groveerr.ErrCodeRequeueAfter along with the GroveError.Message, else it returns false and an empty message.
-func ShouldRequeueAfter(err error) bool {
-	groveErr := &groveerr.GroveError{}
-	if errors.As(err, &groveErr) {
-		return groveErr.Code == groveerr.ErrCodeRequeueAfter
-	}
-	return false
-}
-
-// ShouldContinueReconcileAndRequeue checks if an error is a Grove error,
-// and if it is, returns true when the error code is groveerr.ErrCodeContinueReconcileAndRequeue.
-func ShouldContinueReconcileAndRequeue(err error) bool {
-	groveErr := &groveerr.GroveError{}
-	if errors.As(err, &groveErr) {
-		return groveErr.Code == groveerr.ErrCodeContinueReconcileAndRequeue
-	}
-	return false
 }

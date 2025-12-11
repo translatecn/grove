@@ -49,3 +49,4 @@ scheduler/bin/*
 
 # generated/copied chart resources
 operator/charts/crds/*
+operator/vendor/

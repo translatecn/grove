@@ -21,7 +21,7 @@ import (
 	"fmt"
 
 	"github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
-	"github.com/ai-dynamo/grove/operator/internal/errors"
+	"github.com/ai-dynamo/grove/operator/internal/over_errors"
 
 	"github.com/go-logr/logr"
 	admissionv1 "k8s.io/api/admission/v1"
@@ -54,7 +54,7 @@ func (h *Handler) ValidateCreate(ctx context.Context, obj runtime.Object) (admis
 	h.logValidatorFunctionInvocation(ctx)
 	clusterTopology, err := castToClusterTopology(obj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateCreateClusterTopology, string(admissionv1.Create), "failed to cast object to ClusterTopology")
+		return nil, over_errors.WrapError(err, ErrValidateCreateClusterTopology, string(admissionv1.Create), "failed to cast object to ClusterTopology")
 	}
 	return nil, newClusterTopologyValidator(clusterTopology, admissionv1.Create).validate()
 }
@@ -64,11 +64,11 @@ func (h *Handler) ValidateUpdate(ctx context.Context, oldObj, newObj runtime.Obj
 	h.logValidatorFunctionInvocation(ctx)
 	newClusterTopology, err := castToClusterTopology(newObj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateUpdateClusterTopology, string(admissionv1.Update), "failed to cast new object to ClusterTopology")
+		return nil, over_errors.WrapError(err, ErrValidateUpdateClusterTopology, string(admissionv1.Update), "failed to cast new object to ClusterTopology")
 	}
 	oldClusterTopology, err := castToClusterTopology(oldObj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateUpdateClusterTopology, string(admissionv1.Update), "failed to cast old object to ClusterTopology")
+		return nil, over_errors.WrapError(err, ErrValidateUpdateClusterTopology, string(admissionv1.Update), "failed to cast old object to ClusterTopology")
 	}
 	validator := newClusterTopologyValidator(newClusterTopology, admissionv1.Update)
 	if err := validator.validate(); err != nil {

@@ -30,7 +30,7 @@ import (
 	"github.com/ai-dynamo/grove/operator/internal/constants"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
 	componentutils "github.com/ai-dynamo/grove/operator/internal/controller/common/component/utils"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	"github.com/ai-dynamo/grove/operator/internal/utils"
 	k8sutils "github.com/ai-dynamo/grove/operator/internal/utils/kubernetes"
 

@@ -24,7 +24,7 @@ import (
 	apicommon "github.com/ai-dynamo/grove/operator/api/common"
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	k8sutils "github.com/ai-dynamo/grove/operator/internal/utils/kubernetes"
 
 	"github.com/go-logr/logr"
@@ -54,27 +54,6 @@ func New(client client.Client, scheme *runtime.Scheme) component.Operator[grovec
 		client: client,
 		scheme: scheme,
 	}
-}
-
-// GetExistingResourceNames returns the names of all the existing resources that the Role Operator manages.
-func (r _resource) GetExistingResourceNames(ctx context.Context, _ logr.Logger, pcsObjMeta metav1.ObjectMeta) ([]string, error) {
-	roleNames := make([]string, 0, 1)
-	objectKey := getObjectKey(pcsObjMeta)
-	partialObjMeta, err := k8sutils.GetExistingPartialObjectMetadata(ctx, r.client, rbacv1.SchemeGroupVersion.WithKind("Role"), objectKey)
-	if err != nil {
-		if errors.IsNotFound(err) {
-			return roleNames, nil
-		}
-		return nil, groveerr.WrapError(err,
-			errCodeGetRole,
-			component.OperationGetExistingResourceNames,
-			fmt.Sprintf("Error getting Role: %v for PodCliqueSet: %v", objectKey, k8sutils.GetObjectKeyFromObjectMeta(pcsObjMeta)),
-		)
-	}
-	if metav1.IsControlledBy(partialObjMeta, &pcsObjMeta) {
-		roleNames = append(roleNames, partialObjMeta.Name)
-	}
-	return roleNames, nil
 }
 
 // Sync synchronizes all resources that the Role Operator manages.
@@ -179,4 +158,25 @@ func emptyRole(objKey client.ObjectKey) *rbacv1.Role {
 			Namespace: objKey.Namespace,
 		},
 	}
+}
+
+// GetExistingResourceNames returns the names of all the existing resources that the Role Operator manages.
+func (r _resource) GetExistingResourceNames(ctx context.Context, _ logr.Logger, pcsObjMeta metav1.ObjectMeta) ([]string, error) {
+	roleNames := make([]string, 0, 1)
+	objectKey := getObjectKey(pcsObjMeta)
+	partialObjMeta, err := k8sutils.GetExistingPartialObjectMetadata(ctx, r.client, rbacv1.SchemeGroupVersion.WithKind("Role"), objectKey)
+	if err != nil {
+		if errors.IsNotFound(err) {
+			return roleNames, nil
+		}
+		return nil, groveerr.WrapError(err,
+			errCodeGetRole,
+			component.OperationGetExistingResourceNames,
+			fmt.Sprintf("Error getting Role: %v for PodCliqueSet: %v", objectKey, k8sutils.GetObjectKeyFromObjectMeta(pcsObjMeta)),
+		)
+	}
+	if metav1.IsControlledBy(partialObjMeta, &pcsObjMeta) {
+		roleNames = append(roleNames, partialObjMeta.Name)
+	}
+	return roleNames, nil
 }

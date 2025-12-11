@@ -26,7 +26,7 @@ import (
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
 	pclqcomponent "github.com/ai-dynamo/grove/operator/internal/controller/podclique/components"
 	ctrlutils "github.com/ai-dynamo/grove/operator/internal/controller/utils"
-	"github.com/ai-dynamo/grove/operator/internal/expect"
+	"github.com/ai-dynamo/grove/operator/internal/over-expect"
 
 	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -41,14 +41,14 @@ type Reconciler struct {
 	client                  ctrlclient.Client
 	eventRecorder           record.EventRecorder
 	reconcileStatusRecorder ctrlcommon.ReconcileErrorRecorder
-	expectationsStore       *expect.ExpectationsStore
+	expectationsStore       *over_expect.ExpectationsStore
 	operatorRegistry        component.OperatorRegistry[grovecorev1alpha1.PodClique]
 }
 
 // NewReconciler creates a new instance of the PodClique Reconciler.
 func NewReconciler(mgr ctrl.Manager, controllerCfg configv1alpha1.PodCliqueControllerConfiguration) *Reconciler {
 	eventRecorder := mgr.GetEventRecorderFor(controllerName)
-	expectationsStore := expect.NewExpectationsStore()
+	expectationsStore := over_expect.NewExpectationsStore()
 	return &Reconciler{
 		config:                  controllerCfg,
 		client:                  mgr.GetClient(),

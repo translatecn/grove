@@ -27,7 +27,7 @@ import (
 	apicommon "github.com/ai-dynamo/grove/operator/api/common"
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/constants"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 
 	"github.com/go-logr/logr"
 	"github.com/samber/lo"

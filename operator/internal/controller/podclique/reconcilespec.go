@@ -56,17 +56,6 @@ func (r *Reconciler) reconcileSpec(ctx context.Context, logger logr.Logger, pclq
 	return ctrlcommon.ContinueReconcile()
 }
 
-// ensureFinalizer adds the PodClique finalizer if it's not already present
-func (r *Reconciler) ensureFinalizer(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
-	if !controllerutil.ContainsFinalizer(pclq, apiconstants.FinalizerPodClique) {
-		logger.Info("Adding finalizer", "PodClique", client.ObjectKeyFromObject(pclq), "finalizerName", apiconstants.FinalizerPodClique)
-		if err := ctrlutils.AddAndPatchFinalizer(ctx, r.client, pclq, apiconstants.FinalizerPodClique); err != nil {
-			return ctrlcommon.ReconcileWithErrors("error adding finalizer", err)
-		}
-	}
-	return ctrlcommon.ContinueReconcile()
-}
-
 // processRollingUpdate handles rolling update logic for PodClique when the owner PodCliqueSet has changes
 func (r *Reconciler) processRollingUpdate(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
 	pclqObjectKey := client.ObjectKeyFromObject(pclq)
@@ -99,6 +88,68 @@ func (r *Reconciler) processRollingUpdate(ctx context.Context, logger logr.Logge
 // pcsHasNoActiveRollingUpdate checks if the PodCliqueSet has no active rolling update in progress
 func pcsHasNoActiveRollingUpdate(pcs *grovecorev1alpha1.PodCliqueSet) bool {
 	return pcs.Status.CurrentGenerationHash == nil || pcs.Status.RollingUpdateProgress == nil || pcs.Status.RollingUpdateProgress.CurrentlyUpdating == nil
+}
+
+// initOrResetRollingUpdate initializes or resets the rolling update progress status for the PodClique
+func (r *Reconciler) initOrResetRollingUpdate(ctx context.Context, pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alpha1.PodClique) error {
+	podTemplateHash, err := componentutils.GetExpectedPCLQPodTemplateHash(pcs, pclq.ObjectMeta)
+	if err != nil {
+		return fmt.Errorf("could not update PodClique %s status with rolling update progress: %w", client.ObjectKeyFromObject(pclq), err)
+	}
+	// reset and start the rolling update
+	patch := client.MergeFrom(pclq.DeepCopy())
+	pclq.Status.RollingUpdateProgress = &grovecorev1alpha1.PodCliqueRollingUpdateProgress{
+		UpdateStartedAt:            metav1.Now(),
+		PodCliqueSetGenerationHash: *pcs.Status.CurrentGenerationHash,
+		PodTemplateHash:            podTemplateHash,
+	}
+	// reset the updated replicas count to 0 so that the rolling update can start afresh.
+	pclq.Status.UpdatedReplicas = 0
+	if err = r.client.Status().Patch(ctx, pclq, patch); err != nil {
+		return fmt.Errorf("failed to update PodClique %s status with rolling update progress: %w", client.ObjectKeyFromObject(pclq), err)
+	}
+	return nil
+}
+
+// updateObservedGeneration updates the PodClique status to reflect the current generation being processed
+func (r *Reconciler) updateObservedGeneration(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
+	original := pclq.DeepCopy()
+	pclq.Status.ObservedGeneration = &pclq.Generation
+	if err := r.client.Status().Patch(ctx, pclq, client.MergeFrom(original)); err != nil {
+		logger.Error(err, "failed to patch status.ObservedGeneration")
+		return ctrlcommon.ReconcileWithErrors("error updating observed generation", err)
+	}
+	logger.Info("patched status.ObservedGeneration", "ObservedGeneration", pclq.Generation)
+	return ctrlcommon.ContinueReconcile()
+}
+
+// recordIncompleteReconcile records errors from failed reconciliation steps in the PodClique status
+func (r *Reconciler) recordIncompleteReconcile(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique, errResult *ctrlcommon.ReconcileStepResult) ctrlcommon.ReconcileStepResult {
+	if err := r.reconcileStatusRecorder.RecordErrors(ctx, pclq, errResult); err != nil {
+		logger.Error(err, "failed to record incomplete reconcile operation")
+		// combine all errors
+		allErrs := append(errResult.GetErrors(), err)
+		return ctrlcommon.ReconcileWithErrors("error recording incomplete reconciliation", allErrs...)
+	}
+	return *errResult
+}
+
+// getOrderedKindsForSync returns the ordered list of resource kinds to synchronize for PodClique
+func getOrderedKindsForSync() []component.Kind {
+	return []component.Kind{
+		component.KindPod,
+	}
+}
+
+// ensureFinalizer adds the PodClique finalizer if it's not already present
+func (r *Reconciler) ensureFinalizer(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
+	if !controllerutil.ContainsFinalizer(pclq, apiconstants.FinalizerPodClique) {
+		logger.Info("Adding finalizer", "PodClique", client.ObjectKeyFromObject(pclq), "finalizerName", apiconstants.FinalizerPodClique)
+		if err := ctrlutils.AddAndPatchFinalizer(ctx, r.client, pclq, apiconstants.FinalizerPodClique); err != nil {
+			return ctrlcommon.ReconcileWithErrors("error adding finalizer", err)
+		}
+	}
+	return ctrlcommon.ContinueReconcile()
 }
 
 // shouldCheckPendingUpdatesForPCLQ determines if this PodClique should be evaluated for rolling updates based on its owner, and the currently updating PodCliqueSet replica index
@@ -145,27 +196,6 @@ func shouldResetOrTriggerRollingUpdate(pcs *grovecorev1alpha1.PodCliqueSet, pclq
 	return true
 }
 
-// initOrResetRollingUpdate initializes or resets the rolling update progress status for the PodClique
-func (r *Reconciler) initOrResetRollingUpdate(ctx context.Context, pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alpha1.PodClique) error {
-	podTemplateHash, err := componentutils.GetExpectedPCLQPodTemplateHash(pcs, pclq.ObjectMeta)
-	if err != nil {
-		return fmt.Errorf("could not update PodClique %s status with rolling update progress: %w", client.ObjectKeyFromObject(pclq), err)
-	}
-	// reset and start the rolling update
-	patch := client.MergeFrom(pclq.DeepCopy())
-	pclq.Status.RollingUpdateProgress = &grovecorev1alpha1.PodCliqueRollingUpdateProgress{
-		UpdateStartedAt:            metav1.Now(),
-		PodCliqueSetGenerationHash: *pcs.Status.CurrentGenerationHash,
-		PodTemplateHash:            podTemplateHash,
-	}
-	// reset the updated replicas count to 0 so that the rolling update can start afresh.
-	pclq.Status.UpdatedReplicas = 0
-	if err = r.client.Status().Patch(ctx, pclq, patch); err != nil {
-		return fmt.Errorf("failed to update PodClique %s status with rolling update progress: %w", client.ObjectKeyFromObject(pclq), err)
-	}
-	return nil
-}
-
 // syncPCLQResources synchronizes all managed resources for the PodClique using registered operators
 func (r *Reconciler) syncPCLQResources(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
 	for _, kind := range getOrderedKindsForSync() {
@@ -184,34 +214,4 @@ func (r *Reconciler) syncPCLQResources(ctx context.Context, logger logr.Logger, 
 		}
 	}
 	return ctrlcommon.ContinueReconcile()
-}
-
-// updateObservedGeneration updates the PodClique status to reflect the current generation being processed
-func (r *Reconciler) updateObservedGeneration(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique) ctrlcommon.ReconcileStepResult {
-	original := pclq.DeepCopy()
-	pclq.Status.ObservedGeneration = &pclq.Generation
-	if err := r.client.Status().Patch(ctx, pclq, client.MergeFrom(original)); err != nil {
-		logger.Error(err, "failed to patch status.ObservedGeneration")
-		return ctrlcommon.ReconcileWithErrors("error updating observed generation", err)
-	}
-	logger.Info("patched status.ObservedGeneration", "ObservedGeneration", pclq.Generation)
-	return ctrlcommon.ContinueReconcile()
-}
-
-// recordIncompleteReconcile records errors from failed reconciliation steps in the PodClique status
-func (r *Reconciler) recordIncompleteReconcile(ctx context.Context, logger logr.Logger, pclq *grovecorev1alpha1.PodClique, errResult *ctrlcommon.ReconcileStepResult) ctrlcommon.ReconcileStepResult {
-	if err := r.reconcileStatusRecorder.RecordErrors(ctx, pclq, errResult); err != nil {
-		logger.Error(err, "failed to record incomplete reconcile operation")
-		// combine all errors
-		allErrs := append(errResult.GetErrors(), err)
-		return ctrlcommon.ReconcileWithErrors("error recording incomplete reconciliation", allErrs...)
-	}
-	return *errResult
-}
-
-// getOrderedKindsForSync returns the ordered list of resource kinds to synchronize for PodClique
-func getOrderedKindsForSync() []component.Kind {
-	return []component.Kind{
-		component.KindPod,
-	}
 }

@@ -26,10 +26,11 @@ import (
 	grovecorev1alpha1 "github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
 	componentutils "github.com/ai-dynamo/grove/operator/internal/controller/common/component/utils"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
-	"github.com/ai-dynamo/grove/operator/internal/expect"
+	"github.com/ai-dynamo/grove/operator/internal/over-expect"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	"github.com/ai-dynamo/grove/operator/internal/utils"
 	k8sutils "github.com/ai-dynamo/grove/operator/internal/utils/kubernetes"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	"github.com/go-logr/logr"
 	"github.com/samber/lo"
@@ -38,7 +39,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/record"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 )
 
 // constants for error codes
@@ -72,11 +72,11 @@ type _resource struct {
 	client            client.Client
 	scheme            *runtime.Scheme
 	eventRecorder     record.EventRecorder
-	expectationsStore *expect.ExpectationsStore
+	expectationsStore *over_expect.ExpectationsStore
 }
 
 // New creates a new Pod operator for managing Pod resources within PodCliques
-func New(client client.Client, scheme *runtime.Scheme, eventRecorder record.EventRecorder, expectationsStore *expect.ExpectationsStore) component.Operator[grovecorev1alpha1.PodClique] {
+func New(client client.Client, scheme *runtime.Scheme, eventRecorder record.EventRecorder, expectationsStore *over_expect.ExpectationsStore) component.Operator[grovecorev1alpha1.PodClique] {
 	return &_resource{
 		client:            client,
 		scheme:            scheme,
@@ -127,46 +127,6 @@ func (r _resource) Sync(ctx context.Context, logger logr.Logger, pclq *grovecore
 			component.OperationSync,
 			"some pods are still schedule gated. requeuing request to retry removal of scheduling gates",
 		)
-	}
-	return nil
-}
-
-// buildResource constructs a Pod resource from PodClique specifications, setting up metadata, labels, scheduling gates, and dependencies
-func (r _resource) buildResource(pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alpha1.PodClique, podGangName string, pod *corev1.Pod, podIndex int) error {
-	// Extract PCS replica index from PodClique name for now (will be replaced with direct parameter)
-	pcsName := componentutils.GetPodCliqueSetName(pclq.ObjectMeta)
-	pcsReplicaIndex, err := utils.GetPodCliqueSetReplicaIndexFromPodCliqueFQN(pcsName, pclq.Name)
-	if err != nil {
-		return groveerr.WrapError(err,
-			errCodeGetPodCliqueSetReplicaIndex,
-			component.OperationSync,
-			fmt.Sprintf("error extracting PCS replica index for PodClique %v", client.ObjectKeyFromObject(pclq)),
-		)
-	}
-
-	labels := getLabels(pclq.ObjectMeta, pcsName, podGangName, pcsReplicaIndex)
-	pod.ObjectMeta = metav1.ObjectMeta{
-		GenerateName: fmt.Sprintf("%s-", pclq.Name),
-		Namespace:    pclq.Namespace,
-		Labels:       labels,
-		Annotations:  pclq.Annotations,
-	}
-	if err = controllerutil.SetControllerReference(pclq, pod, r.scheme); err != nil {
-		return groveerr.WrapError(err,
-			errCodeSetControllerReference,
-			component.OperationSync,
-			fmt.Sprintf("error setting controller reference of PodClique: %v on Pod", client.ObjectKeyFromObject(pclq)),
-		)
-	}
-	pod.Spec = *pclq.Spec.PodSpec.DeepCopy()
-	pod.Spec.SchedulingGates = []corev1.PodSchedulingGate{{Name: podGangSchedulingGate}}
-	// Add GROVE specific Pod environment variables
-	addEnvironmentVariables(pod, pclq, pcsName, pcsReplicaIndex, podIndex)
-	// Configure hostname and subdomain for service discovery
-	configurePodHostname(pcsName, pcsReplicaIndex, pclq.Name, pod, podIndex)
-	// If there is a need to enforce a Startup-Order then configure the init container and add it to the Pod Spec.
-	if len(pclq.Spec.StartsAfter) != 0 {
-		return configurePodInitContainer(pcs, pclq, pod)
 	}
 	return nil
 }
@@ -223,6 +183,46 @@ func getLabels(pclqObjectMeta metav1.ObjectMeta, pcsName, podGangName string, pc
 	)
 }
 
+// buildResource constructs a Pod resource from PodClique specifications, setting up metadata, labels, scheduling gates, and dependencies
+func (r _resource) buildResource(pcs *grovecorev1alpha1.PodCliqueSet, pclq *grovecorev1alpha1.PodClique, podGangName string, pod *corev1.Pod, podIndex int) error {
+	// Extract PCS replica index from PodClique name for now (will be replaced with direct parameter)
+	pcsName := componentutils.GetPodCliqueSetName(pclq.ObjectMeta)
+	pcsReplicaIndex, err := utils.GetPodCliqueSetReplicaIndexFromPodCliqueFQN(pcsName, pclq.Name)
+	if err != nil {
+		return groveerr.WrapError(err,
+			errCodeGetPodCliqueSetReplicaIndex,
+			component.OperationSync,
+			fmt.Sprintf("error extracting PCS replica index for PodClique %v", client.ObjectKeyFromObject(pclq)),
+		)
+	}
+
+	labels := getLabels(pclq.ObjectMeta, pcsName, podGangName, pcsReplicaIndex)
+	pod.ObjectMeta = metav1.ObjectMeta{
+		GenerateName: fmt.Sprintf("%s-", pclq.Name),
+		Namespace:    pclq.Namespace,
+		Labels:       labels,
+		Annotations:  pclq.Annotations,
+	}
+	if err = controllerutil.SetControllerReference(pclq, pod, r.scheme); err != nil {
+		return groveerr.WrapError(err,
+			errCodeSetControllerReference,
+			component.OperationSync,
+			fmt.Sprintf("error setting controller reference of PodClique: %v on Pod", client.ObjectKeyFromObject(pclq)),
+		)
+	}
+	pod.Spec = *pclq.Spec.PodSpec.DeepCopy()
+	pod.Spec.SchedulingGates = []corev1.PodSchedulingGate{{Name: podGangSchedulingGate}}
+	// Add GROVE specific Pod environment variables
+	addEnvironmentVariables(pod, pclq, pcsName, pcsReplicaIndex, podIndex)
+	// Configure hostname and subdomain for service discovery
+	configurePodHostname(pcsName, pcsReplicaIndex, pclq.Name, pod, podIndex)
+	// If there is a need to enforce a Startup-Order then configure the init container and add it to the Pod Spec.
+	if len(pclq.Spec.StartsAfter) != 0 {
+		return configurePodInitContainer(pcs, pclq, pod)
+	}
+	return nil
+}
+
 // addEnvironmentVariables adds Grove-specific environment variables to all containers and init-containers.
 func addEnvironmentVariables(pod *corev1.Pod, pclq *grovecorev1alpha1.PodClique, pcsName string, pcsReplicaIndex, podIndex int) {
 	groveEnvVars := []corev1.EnvVar{
@@ -259,6 +259,5 @@ func configurePodHostname(pcsName string, pcsReplicaIndex int, pclqName string, 
 	pod.Spec.Hostname = fmt.Sprintf("%s-%d", pclqName, podIndex)
 
 	// Set subdomain to headless service name (reusing existing logic)
-	pod.Spec.Subdomain = apicommon.GenerateHeadlessServiceName(
-		apicommon.ResourceNameReplica{Name: pcsName, Replica: pcsReplicaIndex})
+	pod.Spec.Subdomain = apicommon.GenerateHeadlessServiceName(apicommon.ResourceNameReplica{Name: pcsName, Replica: pcsReplicaIndex})
 }

@@ -23,7 +23,7 @@ import (
 	apicommon "github.com/ai-dynamo/grove/operator/api/common"
 	"github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
 	"github.com/ai-dynamo/grove/operator/internal/controller/common/component"
-	groveerr "github.com/ai-dynamo/grove/operator/internal/errors"
+	groveerr "github.com/ai-dynamo/grove/operator/internal/over_errors"
 	k8sutils "github.com/ai-dynamo/grove/operator/internal/utils/kubernetes"
 
 	"github.com/go-logr/logr"
@@ -76,26 +76,6 @@ func (r _resource) GetExistingResourceNames(ctx context.Context, _ logr.Logger, 
 		saNames = append(saNames, objMeta.Name)
 	}
 	return saNames, nil
-}
-
-// Sync synchronizes all resources that the ServiceAccount Operator manages.
-func (r _resource) Sync(ctx context.Context, logger logr.Logger, pcs *v1alpha1.PodCliqueSet) error {
-	objectKey := getObjectKey(pcs.ObjectMeta)
-	sa := emptyServiceAccount(objectKey)
-
-	logger.Info("Running CreateOrUpdate ServiceAccount", "objectKey", objectKey)
-	opResult, err := controllerutil.CreateOrPatch(ctx, r.client, sa, func() error {
-		return r.buildResource(pcs, sa)
-	})
-	if err != nil {
-		return groveerr.WrapError(err,
-			errSyncServiceAccount,
-			component.OperationSync,
-			fmt.Sprintf("Error syncing ServiceAccount: %v for PodCliqueSet: %v", objectKey, client.ObjectKeyFromObject(pcs)),
-		)
-	}
-	logger.Info("Triggered create or update of ServiceAccount", "objectKey", objectKey, "result", opResult)
-	return nil
 }
 
 // Delete removes the ServiceAccount resource for the PodCliqueSet.
@@ -159,4 +139,24 @@ func emptyServiceAccount(objKey client.ObjectKey) *corev1.ServiceAccount {
 			Namespace: objKey.Namespace,
 		},
 	}
+}
+
+// Sync synchronizes all resources that the ServiceAccount Operator manages.
+func (r _resource) Sync(ctx context.Context, logger logr.Logger, pcs *v1alpha1.PodCliqueSet) error {
+	objectKey := getObjectKey(pcs.ObjectMeta)
+	sa := emptyServiceAccount(objectKey)
+
+	logger.Info("Running CreateOrUpdate ServiceAccount", "objectKey", objectKey)
+	opResult, err := controllerutil.CreateOrPatch(ctx, r.client, sa, func() error {
+		return r.buildResource(pcs, sa)
+	})
+	if err != nil {
+		return groveerr.WrapError(err,
+			errSyncServiceAccount,
+			component.OperationSync,
+			fmt.Sprintf("Error syncing ServiceAccount: %v for PodCliqueSet: %v", objectKey, client.ObjectKeyFromObject(pcs)),
+		)
+	}
+	logger.Info("Triggered create or update of ServiceAccount", "objectKey", objectKey, "result", opResult)
+	return nil
 }

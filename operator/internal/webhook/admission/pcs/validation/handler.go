@@ -21,7 +21,7 @@ import (
 	"fmt"
 
 	"github.com/ai-dynamo/grove/operator/api/core/v1alpha1"
-	"github.com/ai-dynamo/grove/operator/internal/errors"
+	"github.com/ai-dynamo/grove/operator/internal/over_errors"
 
 	"github.com/go-logr/logr"
 	admissionv1 "k8s.io/api/admission/v1"
@@ -54,7 +54,7 @@ func (h *Handler) ValidateCreate(ctx context.Context, obj runtime.Object) (admis
 	h.logValidatorFunctionInvocation(ctx)
 	pcs, err := castToPodCliqueSet(obj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateCreatePodCliqueSet, string(admissionv1.Create), "failed to cast object to PodCliqueSet")
+		return nil, over_errors.WrapError(err, ErrValidateCreatePodCliqueSet, string(admissionv1.Create), "failed to cast object to PodCliqueSet")
 	}
 	return newPCSValidator(pcs, admissionv1.Create).validate()
 }
@@ -64,11 +64,11 @@ func (h *Handler) ValidateUpdate(ctx context.Context, oldObj, newObj runtime.Obj
 	h.logValidatorFunctionInvocation(ctx)
 	newPCS, err := castToPodCliqueSet(newObj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateUpdatePodCliqueSet, string(admissionv1.Update), "failed to cast new object to PodCliqueSet")
+		return nil, over_errors.WrapError(err, ErrValidateUpdatePodCliqueSet, string(admissionv1.Update), "failed to cast new object to PodCliqueSet")
 	}
 	oldPCS, err := castToPodCliqueSet(oldObj)
 	if err != nil {
-		return nil, errors.WrapError(err, ErrValidateUpdatePodCliqueSet, string(admissionv1.Update), "failed to cast old object to PodCliqueSet")
+		return nil, over_errors.WrapError(err, ErrValidateUpdatePodCliqueSet, string(admissionv1.Update), "failed to cast old object to PodCliqueSet")
 	}
 	validator := newPCSValidator(newPCS, admissionv1.Update)
 	warnings, err := validator.validate()
